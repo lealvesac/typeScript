@@ -1,16 +1,21 @@
-export class View<G> {
+export abstract class View<G> {
   protected elemento: HTMLElement;
+  private escape = false;
 
-  constructor(seletor: string) {
+  constructor(seletor: string, escape?: boolean) {
     this.elemento = document.querySelector(seletor);
+    if (escape) {
+      this.escape = escape;
+    }
   }
 
-  update(model: G): void {
-    const template = this.template(model);
+  public update(model: G): void {
+    let template = this.template(model);
+    if (this.escape) {
+      template = template.replace(/<script>[\s\S]*?<\/script>/, "");
+    }
     this.elemento.innerHTML = template;
   }
 
-  template(model: G): string {
-    throw Error("Implementado pela class filha.")
-  }
+  protected abstract template(model: G): string;
 }
