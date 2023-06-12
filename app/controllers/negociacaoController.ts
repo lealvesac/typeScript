@@ -43,6 +43,26 @@ export class NegociacaoController {
     this.updateView();
   }
 
+  public importaDados(): void {
+    fetch("http://localhost:8080/dados")
+      .then(res => res.json())
+      .then((dados: any[]) => {
+        return dados.map(dadosDeHoje => {
+          return new Negociacao(
+            new Date(),
+            dadosDeHoje.vezes,
+            dadosDeHoje.montante
+          )
+        })
+      })
+      .then(negociscoesdeHoje => {
+        for(let negociacao of negociscoesdeHoje) {
+          this.negociacoes.add(negociacao);
+        }
+        this.negociacoesView.update(this.negociacoes);
+      })
+  }
+
   private diaUtil(data: Date) {
     return (
       data.getDay() > DiasDaSemana.DOMINGO &&

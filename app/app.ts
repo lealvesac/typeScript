@@ -12,3 +12,12 @@ if (form) {
     "Não foi possivle inicializar a aplicação, verifique seu codigo fonte."
   );
 }
+
+const botaoImporta = document.querySelector("#botao-importa");
+if (botaoImporta) {
+  botaoImporta.addEventListener("click", () => {
+    controller.importaDados();
+  })
+} else {
+  throw Error ("Botão importa não foi encontrado.")
+}
