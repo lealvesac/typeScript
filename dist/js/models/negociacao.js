@@ -18,4 +18,16 @@ export class Negociacao {
         const valor = parseFloat(valorStr);
         return new Negociacao(date, quantidade, valor);
     }
+    paraTexto() {
+        return `
+      Data: ${this.data},
+      Qtd: ${this.quantidade},
+      Valor: ${this.valor}
+    `;
+    }
+    comparativo(negociacao) {
+        return (this.data.getDate() === negociacao.data.getDate() &&
+            this.data.getMonth() === negociacao.data.getMonth() &&
+            this.data.getFullYear() === negociacao.data.getFullYear());
+    }
 }

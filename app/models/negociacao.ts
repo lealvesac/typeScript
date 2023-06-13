@@ -1,4 +1,6 @@
-export class Negociacao {
+import { Imprimivel } from "../utils/imprimivel.js";
+
+export class Negociacao implements Imprimivel {
   constructor(
     private _data: Date,
     public readonly quantidade: number,
@@ -24,5 +26,21 @@ export class Negociacao {
     const quantidade = parseInt(quantidadeStr);
     const valor = parseFloat(valorStr);
     return new Negociacao(date, quantidade, valor);
+  }
+
+  public paraTexto(): string {
+    return `
+      Data: ${this.data},
+      Qtd: ${this.quantidade},
+      Valor: ${this.valor}
+    `;
+  }
+
+  public comparativo(negociacao: Negociacao): boolean {
+    return (
+      this.data.getDate() === negociacao.data.getDate() &&
+      this.data.getMonth() === negociacao.data.getMonth() &&
+      this.data.getFullYear() === negociacao.data.getFullYear()
+    );
   }
 }

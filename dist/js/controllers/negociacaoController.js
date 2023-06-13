@@ -12,11 +12,14 @@ import { Negociacoes } from "../models/negociacoes.js";
 import { MsgView } from "../views/msgView.js";
 import { NegociacoesView } from "../views/negociacoesView.js";
 import { domInject } from "../decorators/domInjector.js";
+import { NegociacoesService } from "../services/negociacoesServices.js";
+import { imprimir } from "../utils/imprimir.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
         this.negociacoesView = new NegociacoesView("#negociacoesView");
         this.msgview = new MsgView("#mensagemView");
+        this.negociacoesService = new NegociacoesService();
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
@@ -25,19 +28,22 @@ export class NegociacaoController {
             return this.msgview.update("Apenas negociações em dias úteis serão aceitas.");
         }
         this.negociacoes.add(negociacao);
+        imprimir(negociacao, this.negociacoes);
         this.limparFormulario();
         this.updateView();
     }
     importaDados() {
-        fetch("http://localhost:8080/dados")
-            .then(res => res.json())
-            .then((dados) => {
-            return dados.map(dadosDeHoje => {
-                return new Negociacao(new Date(), dadosDeHoje.vezes, dadosDeHoje.montante);
+        this.negociacoesService
+            .obterNegociacoes()
+            .then((negociscoesDeHoje) => {
+            return negociscoesDeHoje.filter((negociscoesDeHoje) => {
+                return !this.negociacoes
+                    .lista()
+                    .some((Negociacao) => Negociacao.comparativo(negociscoesDeHoje));
             });
         })
-            .then(negociscoesdeHoje => {
-            for (let negociacao of negociscoesdeHoje) {
+            .then((negociscoesDeHoje) => {
+            for (let negociacao of negociscoesDeHoje) {
                 this.negociacoes.add(negociacao);
             }
             this.negociacoesView.update(this.negociacoes);
