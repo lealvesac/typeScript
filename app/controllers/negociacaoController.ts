@@ -54,7 +54,9 @@ export class NegociacaoController {
         return negociscoesDeHoje.filter((negociscoesDeHoje) => {
           return !this.negociacoes
             .lista()
-            .some((Negociacao) => Negociacao.comparativo(negociscoesDeHoje));
+            .some((Negociacao) =>
+              Negociacao.comparativoIgualdade(negociscoesDeHoje)
+            );
         });
       })
       .then((negociscoesDeHoje) => {

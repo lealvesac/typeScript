@@ -1,6 +1,6 @@
-import { Imprimivel } from "../utils/imprimivel.js";
+import { Modelo } from "../interfaces/meuModelo.js";
 
-export class Negociacao implements Imprimivel {
+export class Negociacao implements Modelo<Negociacao> {
   constructor(
     private _data: Date,
     public readonly quantidade: number,
@@ -36,7 +36,7 @@ export class Negociacao implements Imprimivel {
     `;
   }
 
-  public comparativo(negociacao: Negociacao): boolean {
+  public comparativoIgualdade(negociacao: Negociacao): boolean {
     return (
       this.data.getDate() === negociacao.data.getDate() &&
       this.data.getMonth() === negociacao.data.getMonth() &&

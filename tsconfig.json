@@ -1,12 +1,24 @@
 {
-    "compilerOptions": {
-        "outDir": "dist/js",
-        "target": "ES6",
-        "noEmitOnError": true,
-        "noImplicitAny": true,
-        "removeComments": true,
-        "strictNullChecks": true,
-        "experimentalDecorators": true
-    },
-    "include": ["app/**/*"]
+  "compilerOptions": {
+    "outDir": "app/dist/js",
+    "target": "ES6",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": [
+    "app/**/*",
+    "src/controllers",
+    "src/app.ts",
+    "src/views",
+    "src/utils",
+    "src/services",
+    "src/models",
+    "src/interfaces",
+    "src/enums",
+    "src/decorators"
+  ]
 }

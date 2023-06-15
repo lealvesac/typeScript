@@ -1,7 +1,7 @@
-import { Imprimivel } from "../utils/imprimivel.js";
+import { Modelo } from "../interfaces/meuModelo.js";
 import { Negociacao } from "./negociacao.js";
 
-export class Negociacoes implements Imprimivel {
+export class Negociacoes implements Modelo<Negociacoes> {
   private negociacoes: Negociacao[] = [];
 
   public add(negociacao: Negociacao) {
@@ -14,5 +14,11 @@ export class Negociacoes implements Imprimivel {
 
   public paraTexto(): string {
     return JSON.stringify(this.negociacoes, null, 2);
+  }
+
+  comparativoIgualdade(negociacoes: Negociacoes): boolean {
+    return (
+      JSON.stringify(this.negociacoes) === JSON.stringify(negociacoes.lista())
+    );
   }
 }
